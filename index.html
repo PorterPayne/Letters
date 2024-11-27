@@ -1,267 +1,571 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Mail Box</title>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cookie Clicker</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f0f0f0;
-      image-rendering: pixelated;
-      /* INSERT BASE64 BACKGROUND IMAGE CODE HERE */
-      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAYAAABxLuKEAAAAAXNSR0IArs4c6QAAAv1JREFUeF7tm9t1wjAMQGGCzsD+P12lE3SFMgE9AVwcI1lP23JjPpPYka5kvYDz7evndpJ8vj9Op8tVskL/bM93FVKexWD0ak61coFBzLXAdAWzxYb0yeMRdj3gIfP3mFz5HA52PSCUTaR3MEkByNKcbAQBwJTn7OcFTqjXHkyp1CY4dK0mbEQwCr1eYDwV4uw1wltqBi3kaQNmE6AGpycUShYoSexiDMfKyCaoISIFXKGh2nlMohUpRQsMVQ++kCtojsHAnudNBaah8HTtBcUr3XruwzAUXOAJXM5T3kh74ZUv0+UiKeMpS70lYLicpzCR9lpgunbXkUyvlMW/u1YKEm3ZAuN+lPI2HmrpW7gAlSmp+wKZdB4j7DsE8uCPUrUVdV8oxBxgKENQ94VQtsd1YLBWXtNHcYSWdP7lfkqZ9GBKOEoBOFyqsx1qA6VcNjAJjvLllE67+xqvMchlByPSzvDwAlOBJ4Fj8BZb8DUY37SUA8cIZU4wWEZMtB2gzAumQ7kwT/CFzp9jC1BuPzcYU7CqLz42mDShBCaVxwVDNJ0LTH6isoxmB1O6occAvdespxK8bWDKjT2yRIMRQjXMIobUg2lVgfYGg1CLB6ZD8cbJ8nowrUtzj2PJIUB6TCWnk2fUaWr29h6PQK6E8/AY6yB5sHWVuleXwT8c0nSoA63bFkyKGRooLSQbvKct+A4WvuXr9zHmyN6SV9v375U+b/v/Kx0RTpl8LtcF5n4cgaw81mN6NYtUMCLB9DxGQXqiP2aFPC+P6QmldTtBeQh2P4PzANMbShLMWnFrAdTWPWUaW8dEBPP05rFgyiPl5blFTbLLPMx3jAfj3YoANYn4z2imHw61ON8eezpNFmN4jAeQWkBXzItoMNisJfIMxqFGon8yD9GOmk1yWY0y8v59wnV1ZsTnbmd+zuDV/xuMgewCg8CTxxjMCtGOkcFbtqUxwQQYR8jSdQ9vcUi1Rme5L6fB9B4RTAUGg9MqrhhrkH4eA5XbraCMeBdA8hc+kg4zuf+zpwAAAABJRU5ErkJggg==');
-      background-size: 50%;
-      overflow-y: hidden;
-      margin: 0px;
-      padding: 0px;
+      text-align: center;
     }
-    #foto {
-      image-rendering: pixelated;
-      background-size: cover;
-      width: 250px;
-      height: 250px;
-      margin-top: 80px;
-      background-image: url('data:image/png;base64,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');
-    }
-    #home-page {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      height: 100vh;
-      gap: 30px;
-      margin-top: 20px;
-    }
-    #home-title {
-      font-size: 75px;
-      color: #FFF;
-      margin-left: auto;
-      margin-right: auto;
-      width: 60vw;
-      border-left: 10px solid #FFF;
-      padding-left: 10px;
-    }
-    #button-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      flex-grow: 1;
-      height: 30vh;
-    }
-    .menu-button {
-      width: 200px;
-      height: 40px;
-      font-size: 20px;
-      border: 2px solid #FF99FF;
-      border-radius: 5px;
-      background-color: #FFB2F9;
-      color: #fff;
-      cursor: pointer;
-    }
-    .back-btn {
-      width: 50px;
-      height: 30px;
-      font-size: 50px;
-      border: none;
-      border-radius: 10px;
-      background-color: transparent;
-      color: #000;
-      cursor: pointer;
-      margin: -18px 0px 0px 0px;
-    }
+
+
+
+
     button {
-      -webkit-tap-highlight-color: transparent;
+      margin: 10px;
+      padding: 10px;
+      font-size: 16px;
     }
-    #letter-container {
-      width: 100vw;
-      margin: 0px;
-      padding: 0px;
-      border: 1px 0px solid #ccc;
-      //border-radius: 10px;
-      //background-color: rgba(255, 255, 255, 0.2);
+
+
+
+
+    .dark-mode {
+      background-color: #333;
+      color: #fff;
     }
-    #unlocks-page {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 0px;
-      overflow-y: auto;
-      height: 100vh;
+
+
+
+
+    .dark-mode button {
+      background-color: #444;
+      color: #fff;
+      border: 1px solid #555;
     }
-    #iframe-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      margin-top: 15px;
+
+
+
+
+    .dark-mode button:hover {
+      background-color: #555;
     }
-    iframe {
-      width: 300px;
-      height: 300px;
+#dark-mode-toggle{
+Position: fixed;
+Top: 60px;
+Left: 0px;
+Padding: 5px;
+Font size: 18 px;
+Z-index: 1;
+}
+    .cookies-falling {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+
+
+
+    .cookie {
+      position: absolute;
+      font-size: 30px;
+      animation: fall 10s linear infinite;
+      opacity: 0.5;
+      top: 0;
+    }
+
+
+
+
+    @keyframes fall {
+      0% {
+        top: -50px;
+      }
+      100% {
+        top: 100vh;
+      }
+    }
+
+
+
+
+    #cookie-button {
+      font-size: 140px;
+      cursor: pointer;
+      background-color: transparent;
+      padding: 0;
+      margin: 0;
       border: none;
+      box-shadow: none;
+      transition: all 0.2s ease;
+      outline: none;
+-webkit-tap-highlight-color: transparent;
+margin-top: -25px;
     }
-    #letter-page {
-      overflow-y: auto;
-      height: 96vh;
+
+
+
+
+    #cookie-button:active {
+      transform: scale(1.1);
+      box-shadow: none;
+      animation: pulse 0.5s;
     }
-    .letter-iframe {
-      width: 100vw;
-      height: 85vh;
+
+
+
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1);
+      }
     }
-    .headings {
+
+
+
+
+    .dark-mode #cookie-button {
+      background-color: transparent;
+      color: #FFD700;
+    }
+
+
+
+
+    .title-container {
       display: flex;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 5px;
     }
-    #letter-title {
-      margin: 0px;
-      padding: 10px 0px;
-      width: 100%;
-    }
-    #unlocks-title {
-      margin: 0px;
-      padding: 10px 0px;
-      width: 100%;
-    }
+#cookies{
+Font-size: 25px;
+}
+
+
+
+
+.cookie-click-amount {
+  position: absolute;
+  font-size: 24px;
+  font-weight: bold;
+  animation: drop 2s;
+}
+@keyframes drop {
+  0% {
+    top: 0;
+    opacity: 1;
+  }
+  100% {
+    top: 100px;
+    opacity: 0;
+  }
+}
+#upgrades-button {
+  position: fixed;
+  top: 80px;
+  left: 0px;
+  padding: 5px;
+  font-size: 18px;
+  background-color: #444;
+  color: #fff;
+  border: 1px solid #555;
+  z-index: 1;
+}
+
+
+
+
+#upgrades-button:hover {
+  background-color: #555;
+}
+
+
+
+
+#upgrades-shop {
+  display: none;
+  position: fixed;
+  top: 90px;
+  left: 10px;
+  background-color: #444;
+  color: #fff;
+  padding: 10px;
+  border: 1px solid #555;
+  width: 200px;
+}
+
+
+
+
+#upgrades-shop button {
+  margin: 5px;
+  padding: 5px;
+  font-size: 12px;
+  width: 100%;
+}
+
+
+
+
+
+
+
+
   </style>
 </head>
 <body>
-  <div id="home-page">
-    <h1 id="home-title">Love Letters</h1>
-    <div id="button-container">
-      <button class="menu-button" id="open-letter-btn">Open a Letter!</button>
-      <button class="menu-button" id="unlocks-btn">Unlocks</button>
-      <!--button class="menu-button" id="filler-btn">Filler</button-->
-      <div id="foto"></div>
-    </div>
-    <input type="file" id="file-input" accept=".txt" style="display: none;">
+  <div class="title-container">
+    <h1>Cookie Clicker</h1>
+    <div id="cookie-button">🍪</div>
   </div>
-  <div id="letter-page" style="display: none;">
-    <div class="headings">
-    <button class="back-btn" id="back-btn">←</button>
-    <h1 id="letter-title"></h1>
-    </div>
-    <div id="letter-container">
-      <div id="letter-content"></div>
-    </div>
-  </div>
-  <div id="unlocks-page" style="display: none;">
-    <div class="headings">
-    <button class="back-btn" id="back-btn-unlocks">←</button>
-    <h1 id="unlocks-title">Unlocks</h1>
-    </div>
-    <div id="iframe-container">
-      <!-- Iframes will be generated dynamically here -->
-    </div>
-  </div>
+  <div id="cookies">🍪: 0</div>
+  <div id="cursor-count">🖱️ Cursors: 0 (10)</div>
+  <button id="cursor-button">Buy Cursor</button>
+  <div id="grandma-count">👵 Grandmas: 0 (100)</div>
+  <button id="grandma-button">Buy Grandma</button>
+  <div id="factory-count">🏭 Factories: 0 (1000)</div>
+  <button id="factory-button">Buy Factory</button>
+  <div id="mine-count">⛏️ Mines: 0 (10000)</div>
+  <button id="mine-button">Buy Mine</button>
+  <div id="farm-count">🌾 Farms: 0 (50000)</div>
+  <button id="farm-button">Buy Farm</button>
+  <div id="time-machine-count">⏰ Time Machines: 0 (100000)</div>
+  <button id="time-machine-button">Buy Time Machine</button>
+  <div id="cookies-per-second">Cookies/second: 0</div>
+  <button id="dark-mode-toggle" style="position: fixed; left: 0; padding: 5px; font-size: 12px;">🌙 Dark Mode</button>
+  <div class="cookies-falling"></div>
+
+
+
+
+<button id="upgrades-button">Upgrades</button>
+<div id="upgrades-shop">
+  <!-- Your upgrades for sale will go here -->
+  <button id="upgrade-1">Upgrade 1: +10% Cookies/Second</button>
+  <button id="upgrade-2">Upgrade 2: +20% Cookie Click</button>
+  <!-- Add more upgrades here -->
+</div>
+
+
+
+
   <script>
-    const openLetterBtn = document.getElementById('open-letter-btn');
-    const unlocksBtn = document.getElementById('unlocks-btn');
-    const fillerBtn = document.getElementById('filler-btn');
-    const fileInput = document.getElementById('file-input');
-    const homePage = document.getElementById('home-page');
-    const letterPage = document.getElementById('letter-page');
-    const unlocksPage = document.getElementById('unlocks-page');
-    const letterContainer = document.getElementById('letter-container');
-    const letterTitle = document.getElementById('letter-title');
-    const letterContent = document.getElementById('letter-content');
-    const iframeContainer = document.getElementById('iframe-container');
-    const backBtn = document.getElementById('back-btn');
-    const backBtnUnlocks = document.getElementById('back-btn-unlocks');
+    //JavaScript:
+    let cookies = 0;
+    let cursorPrice = 10;
+    let grandmaPrice = 100;
+    let factoryPrice = 1000;
+    let minePrice = 10000;
+    let farmPrice = 50000;
+    let timeMachinePrice = 100000;
+    let cursorCount = 0;
+    let grandmaCount = 0;
+    let factoryCount = 0;
+    let mineCount = 0;
+    let farmCount = 0;
+    let timeMachineCount = 0;
+    let cursorMultiplier = 1.1;
+    let grandmaMultiplier = 1.1;
+    let factoryMultiplier = 1.1;
+let mineMultiplier = 1.1;
+let farmMultiplier = 1.1;
+let timeMachineMultiplier = 1.1;
+let cookiesPerSecond = 0;
 
 
-    openLetterBtn.addEventListener('click', () => {
-      fileInput.click();
-    });
 
 
-fileInput.addEventListener('change', (e) => {
-  const file = fileInput.files[0];
-  const reader = new FileReader();
-  reader.addEventListener('load', (e) => {
-    const html = e.target.result;
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, 'text/html');
+document.getElementById("cookie-button").addEventListener("click", () => {
+  cookies++;
+  updateCookies();
+});
 
 
-    if (doc && doc.body) {
-      const title = doc.querySelector('title').textContent;
-      const content = doc.body.innerHTML;
 
 
-      const iframe = document.createElement('iframe');
-      iframe.frameBorder = 0;
-      iframe.width = '100%';
-      iframe.height = '100%';
-      iframe.srcdoc = content;
-      iframe.className = 'letter-iframe';
-      iframe.style = 'background-color: transparent; border: none;';
+// Initialize displays
+document.getElementById("cookies").innerText = `🍪: ${cookies}`;
+document.getElementById("cursor-count").innerText = `🖱️ Cursors: ${cursorCount} (${cursorPrice})`;
+document.getElementById("grandma-count").innerText = `👵 Grandmas: ${grandmaCount} (${grandmaPrice})`;
+document.getElementById("factory-count").innerText = `🏭 Factories: ${factoryCount} (${factoryPrice})`;
+document.getElementById("mine-count").innerText = `⛏️ Mines: ${mineCount} (${minePrice})`;
+document.getElementById("farm-count").innerText = `🌾 Farms: ${farmCount} (${farmPrice})`;
+document.getElementById("time-machine-count").innerText = `⏰ Time Machines: ${timeMachineCount} (${timeMachinePrice})`;
+document.getElementById("cookies-per-second").innerText = `Cookies/second: ${cookiesPerSecond}`;
 
 
-      const letterContentDiv = document.getElementById('letter-content');
-      letterContentDiv.innerHTML = '';
-      letterContentDiv.appendChild(iframe);
 
 
-      letterTitle.textContent = title;
-      homePage.style.display = 'none';
-      letterPage.style.display = 'block';
+// Cursor button click event
+document.getElementById("cursor-button").addEventListener("click", () => {
+  if (cookies >= cursorPrice) {
+    cookies -= cursorPrice;
+    cursorCount++;
+    cursorPrice *= cursorMultiplier;
+    updateDisplays();
+  }
+});
 
 
-      // Wait for the iframe to finish loading its content
-      iframe.addEventListener('load', () => {
-        // Scan the opened letter for iframes
-        const iframes = iframe.contentDocument.querySelectorAll('iframe');
-        iframes.forEach((iframe) => {
-          const src = iframe.srcdoc;
-          const parser = new DOMParser();
-          const iframeDoc = parser.parseFromString(src, 'text/html');
-          const iframeTitle = iframeDoc.querySelector('title').textContent;
-          const key = `iframe-${iframeTitle}`;
-          localStorage.setItem(key, src);
-        });
-      });
-    } else {
-      console.error('Error parsing HTML file');
+
+
+// Grandma button click event
+document.getElementById("grandma-button").addEventListener("click", () => {
+  if (cookies >= grandmaPrice) {
+    cookies -= grandmaPrice;
+    grandmaCount++;
+    grandmaPrice *= grandmaMultiplier;
+    updateDisplays();
+  }
+});
+
+
+
+
+// Factory button click event
+document.getElementById("factory-button").addEventListener("click", () => {
+  if (cookies >= factoryPrice) {
+    cookies -= factoryPrice;
+    factoryCount++;
+    factoryPrice *= factoryMultiplier;
+    updateDisplays();
+  }
+});
+
+
+
+
+// Mine button click event
+document.getElementById("mine-button").addEventListener("click", () => {
+  if (cookies >= minePrice) {
+    cookies -= minePrice;
+    mineCount++;
+    minePrice *= mineMultiplier;
+    updateDisplays();
+  }
+});
+
+
+
+
+// Farm button click event
+document.getElementById("farm-button").addEventListener("click", () => {
+  if (cookies >= farmPrice) {
+    cookies -= farmPrice;
+    farmCount++;
+    farmPrice *= farmMultiplier;
+    updateDisplays();
+  }
+});
+
+
+
+
+// Time Machine button click event
+document.getElementById("time-machine-button").addEventListener("click", () => {
+  if (cookies >= timeMachinePrice) {
+    cookies -= timeMachinePrice;
+    timeMachineCount++;
+    timeMachinePrice *= timeMachineMultiplier;
+    updateDisplays();
+  }
+});
+
+
+
+
+// Automatic cookie production
+setInterval(() => {
+  cookiesPerSecond = cursorCount * 0.1 + grandmaCount * 1 + factoryCount * 5 + mineCount * 10 + farmCount * 50 + timeMachineCount * 100;
+  cookies += cookiesPerSecond;
+  updateCookies();
+  updateCookiesPerSecond();
+}, 1000);
+
+
+
+
+// Update cookies display
+function updateCookies() {
+  document.getElementById("cookies").innerText = `🍪: ${Math.floor(cookies)}`;
+}
+
+
+
+
+// Update cookies per second display
+function updateCookiesPerSecond() {
+  document.getElementById("cookies-per-second").innerText = `Cookies/second: ${cookiesPerSecond.toFixed(1)}`;
+}
+
+
+
+
+// Update all displays
+function updateDisplays() {
+  updateCookies();
+  document.getElementById("cursor-count").innerText = `🖱️ Cursors: ${cursorCount} (${Math.floor(cursorPrice)})`;
+  document.getElementById("grandma-count").innerText = `👵 Grandmas: ${grandmaCount} (${Math.floor(grandmaPrice)})`;
+  document.getElementById("factory-count").innerText = `🏭 Factories: ${factoryCount} (${Math.floor(factoryPrice)})`;
+  document.getElementById("mine-count").innerText = `⛏️ Mines: ${mineCount} (${Math.floor(minePrice)})`;
+  document.getElementById("farm-count").innerText = `🌾 Farms: ${farmCount} (${Math.floor(farmPrice)})`;
+  document.getElementById("time-machine-count").innerText = `⏰ Time Machines: ${timeMachineCount} (${Math.floor(timeMachinePrice)})`;
+  updateCookiesPerSecond();
+}
+
+
+
+
+const darkModeToggle = document.getElementById('dark-mode-toggle');
+const body = document.body;
+
+
+
+
+darkModeToggle.addEventListener('click', () => {
+  body.classList.toggle('dark-mode');
+  if (body.classList.contains('dark-mode')) {
+    localStorage.setItem('darkMode', 'enabled');
+  } else {
+    localStorage.setItem('darkMode', 'disabled');
+  }
+});
+
+
+
+
+// Initialize dark mode based on local storage
+if (localStorage.getItem('darkMode') === 'enabled') {
+  body.classList.add('dark-mode');
+}
+
+
+
+
+setInterval(() => {
+  const cookieContainer = document.querySelector('.cookies-falling');
+  const cookie = document.createElement('span');
+  cookie.textContent = '🍪';
+  cookie.className = 'cookie';
+  cookie.style.left = `${Math.random() * 100}%`;
+  cookieContainer.appendChild(cookie);
+  setTimeout(() => {
+    cookie.remove();
+  }, 10000);
+}, 500);
+
+
+
+
+document.getElementById("cookie-button").addEventListener("click", (event) => {
+  cookies += clickMultiplier;
+  updateCookies();
+  
+  const cookieClickAmount = document.createElement("span");
+  cookieClickAmount.textContent = `+${clickMultiplier}`;
+  cookieClickAmount.className = "cookie-click-amount";
+  cookieClickAmount.style.top = `${event.clientY}px`;
+  cookieClickAmount.style.left = `${event.clientX}px`;
+  document.body.appendChild(cookieClickAmount);
+  setTimeout(() => {
+    cookieClickAmount.remove();
+  }, 2000);
+});
+
+
+
+
+document.getElementById("upgrades-button").addEventListener("click", () => {
+  const upgradesShop = document.getElementById("upgrades-shop");
+  upgradesShop.style.display = upgradesShop.style.display === "block" ? "none" : "block";
+});
+
+
+
+
+// Autosave variables
+const autosaveInterval = 60000; // 1 minute
+const localStorageKey = 'cookieClickerSave';
+
+
+
+
+// Save game data
+function saveGame() {
+    const gameData = {
+        cookies,
+        cursorCount,
+        grandmaCount,
+        factoryCount,
+        mineCount,
+        farmCount,
+        timeMachineCount,
+        cursorPrice,
+        grandmaPrice,
+        factoryPrice,
+        minePrice,
+        farmPrice,
+        timeMachinePrice,
+        cookiesPerSecond,
+        cursorMultiplier,
+        grandmaMultiplier,
+        factoryMultiplier,
+        mineMultiplier,
+        farmMultiplier,
+        timeMachineMultiplier
+    };
+
+
+
+
+    localStorage.setItem(localStorageKey, JSON.stringify(gameData));
+}
+
+
+
+
+// Load saved game data
+function loadGame() {
+    if (localStorage.getItem(localStorageKey)) {
+        const savedData = JSON.parse(localStorage.getItem(localStorageKey));
+        
+        cookies = savedData.cookies;
+        cursorCount = savedData.cursorCount;
+        grandmaCount = savedData.grandmaCount;
+        factoryCount = savedData.factoryCount;
+        mineCount = savedData.mineCount;
+        farmCount = savedData.farmCount;
+        timeMachineCount = savedData.timeMachineCount;
+        cursorPrice = savedData.cursorPrice;
+        grandmaPrice = savedData.grandmaPrice;
+        factoryPrice = savedData.factoryPrice;
+        minePrice = savedData.minePrice;
+        farmPrice = savedData.farmPrice;
+        timeMachinePrice = savedData.timeMachinePrice;
+        cookiesPerSecond = savedData.cookiesPerSecond;
+        cursorMultiplier = savedData.cursorMultiplier;
+        grandmaMultiplier = savedData.grandmaMultiplier;
+        factoryMultiplier = savedData.factoryMultiplier;
+        mineMultiplier = savedData.mineMultiplier;
+        farmMultiplier = savedData.farmMultiplier;
+        timeMachineMultiplier = savedData.timeMachineMultiplier;
+        
+        updateDisplays();
     }
-  });
-  reader.readAsText(file);
-});
+}
 
 
-    backBtn.addEventListener('click', () => {
-      location.reload(); // Refresh the page
-    });
 
 
-    backBtnUnlocks.addEventListener('click', () => {
-      location.reload(); // Refresh the page
-    });
+// Initialize autosave
+loadGame();
+setInterval(saveGame, autosaveInterval);
 
 
-    unlocksBtn.addEventListener('click', () => {
-      homePage.style.display = 'none';
-      unlocksPage.style.display = 'block';
-      const iframeFiles = Object.keys(localStorage).filter(key => key.startsWith('iframe-'));
-      iframeContainer.innerHTML = '';
-iframeFiles.forEach((file, index) => {
-  const iframe = document.createElement('iframe');
-  iframe.srcdoc = localStorage.getItem(file);
-  iframe.frameBorder = 0;
-  iframe.width = '300px';
-  iframe.height = '300px';
-  iframe.allowFullscreen = true; // Add this line
-  iframe.addEventListener('click', () => {
-    iframe.requestFullscreen();
-  });
-  iframeContainer.appendChild(iframe);
-});
-    });
 
 
-    fillerBtn.addEventListener('click', () => {
-      // Currently does nothing
-    });
   </script>
 </body>
 </html>
