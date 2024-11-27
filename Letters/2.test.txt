@@ -1,9 +1,0 @@
-
-  <html>
-    <head>
-      <title>2.test</title>
-    </head>
-    <body>
-      This is for testing!!!<div><br></div><div><img style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); border-radius: 5px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAAXNSR0IArs4c6QAAABdJREFUGFcFwQEBAAAAgiD6P9pgKFlq5jj6Bf/CX5yJAAAAAElFTkSuQmCC" width="200"><br></div><div><br></div><div>Test</div>
-    </body>
-  </html>
