@@ -89,7 +89,7 @@
       -webkit-tap-highlight-color: transparent; 
     }
     
-    #letter-container {
+    #letter-container iframe {
       width: 95vw;
       margin: 0px;
       padding: 2.5vw;
@@ -192,7 +192,7 @@ select {
         <option value="">&nbsp&nbsp&nbsp&nbsp Open a letter</option>
         
         <!-- Add more options here -->
-        <!--option value="letter2">Letter 2</option-->
+        <option value="Test">Test</option>
         <option value="The First Letter">1.The first letter</option>
         
       </select>
@@ -203,14 +203,14 @@ select {
   </div>
   
   <div id="letter-page" style="display: none;">
-    <div class="headings">
-      <button class="back-btn" id="back-btn">《&nbsp&nbsp</button>
-      <h1 id="letter-title"></h1>
-    </div>
-    <div id="letter-container">
-      <div id="letter-content"></div>
-    </div>
-  </div>
+<div class="headings">
+<button class="back-btn" id="back-btn">《&nbsp&nbsp</button>
+<h1 id="letter-title"></h1>
+</div>
+<div id="letter-container">
+<iframe id="iframe" width="100%" height="500"></iframe>
+</div>
+</div>
   
   <div id="unlocks-page" style="display: none;">
     <div class="headings">
@@ -222,16 +222,16 @@ select {
 
 
   <script>
-    const letters = {
+const letters = {
   "The First Letter": "https://raw.githubusercontent.com/PorterPayne/Letters/refs/heads/main/Letters/1.The%20first%20letter.txt",
-  "letter2": "<html><body><h1>Letter 2</h1><p>This is the content of letter 2.</p></body></html>",
+  "Test": "https://raw.githubusercontent.com/PorterPayne/Letters/refs/heads/main/Letters/Pippy.txt",
   // Add more letters here
 };
 
 
 const letterSelect = document.getElementById('letter-select');
 const letterPage = document.getElementById('letter-page');
-const letterContent = document.getElementById('letter-content');
+const letterIframe = document.getElementById('iframe');
 const backBtn = document.getElementById('back-btn');
 const unlocksBtn = document.getElementById('unlocks-btn');
 const unlocksPage = document.getElementById('unlocks-page');
@@ -242,29 +242,21 @@ letterSelect.addEventListener('change', (e) => {
   const selectedLetter = e.target.value;
   if (selectedLetter) {
     const letterUrl = letters[selectedLetter];
-    const letterContentDiv = document.getElementById('letter-content');
+    letterIframe.src = letterUrl;
     document.getElementById('letter-title').innerText = `${selectedLetter.replace('letter', '')}`;
+    document.getElementById('home-page').style.display = 'none';
+    letterPage.style.display = 'block';
+  }
+});
 
 
-    fetch(letterUrl)
-      .then(response => response.text())
-      .then(html => {
-        const letterContentDiv = document.getElementById('letter-content');
-        letterContentDiv.innerHTML = html;
-        
-// Scan for iframes and save their code to localStorage
-const iframes = letterContentDiv.getElementsByTagName('iframe');
-for (const iframe of iframes) {
-  const iframeTitle = iframe.srcdoc.match(/<title>(.*?)<\/title>/)[1];
-  const iframeCode = iframe.outerHTML;
-  localStorage.setItem(`iframe-${iframeTitle}`, iframeCode);
-}
-
-
-        document.getElementById('home-page').style.display = 'none';
-        letterPage.style.display = 'block';
-      })
-      .catch(error => console.error('Error:', error));
+letterIframe.addEventListener('load', () => {
+  const iframeContent = letterIframe.contentDocument.body.innerHTML;
+  const iframes = letterIframe.contentDocument.getElementsByTagName('iframe');
+  for (const iframe of iframes) {
+    const iframeTitle = iframe.srcdoc.match(/<title>(.*?)<\/title>/)[1];
+    const iframeCode = iframe.outerHTML;
+    localStorage.setItem(`iframe-${iframeTitle}`, iframeCode);
   }
 });
 
@@ -279,23 +271,17 @@ backBtn.addEventListener('click', () => {
 unlocksBtn.addEventListener('click', () => {
   document.getElementById('home-page').style.display = 'none';
   unlocksPage.style.display = 'block';
-
-
   // Display iframes from localStorage
   const iframeContainer = document.getElementById('iframe-container');
   iframeContainer.innerHTML = '';
-
-
   const iframeKeys = Object.keys(localStorage).filter(key => key.startsWith('iframe-'));
   iframeKeys.sort((a, b) => localStorage.getItem(b).lastModified - localStorage.getItem(a).lastModified);
-
-
   for (const key of iframeKeys) {
     const iframeCode = localStorage.getItem(key);
     const iframe = document.createElement('iframe');
     iframe.srcdoc = iframeCode;
     iframe.width = 350;
-    iframe.width = 350;
+    iframe.height = 350;
     iframe.frameborder = 0;
     iframeContainer.appendChild(iframe);
   }
@@ -320,8 +306,6 @@ document.addEventListener('click', () => {
     elem.msRequestFullScreen();
   }
 });
-
-
 </script>
 </body>
 </html>
