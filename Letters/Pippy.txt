@@ -1,0 +1,200 @@
+
+  <html>
+    <head>
+      <title>Pippy</title>
+    </head>
+    <body>
+      <iframe srcdoc="<html>
+  <head>
+    <title>Wordle Pippy</title>
+    <style>
+      body {
+        background-color: #333;
+        color: #fff;
+        font-family: monospace;
+        width: 300px;
+        height: 300px;
+        margin: 0px;
+        padding: 0px;
+        overflow: hidden;
+        //border: 1px solid #000;
+      }
+      #everything {
+        //border: 1px solid #F00;
+        }
+      .wordle-row {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 4px;
+        padding; 0px;
+        margin-top: 0px;
+      }
+      
+      .wordle-box {
+        width: 25px;
+        height: 25px;
+        border: 2px solid #555;
+        margin: 3px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        background-color: #444;
+      }
+      
+      .correct {
+        background-color: #333;
+        border-color: #0f0;
+      }
+      
+      .close {
+        background-color: #333;
+        border-color: #ff0;
+      }
+      
+      .incorrect {
+        background-color: #333;
+        border-color: #666;
+      }
+      
+      input[type=&quot;text&quot;] {
+        width: 190px;
+        height: 25px;
+        font-size: 15px;
+        padding: 0px;
+        background-color: #444;
+        color: #fff;
+        border: none;
+        border-radius: 5px 0px 0px 5px;
+        margin: 0px;
+        margin-left: 11px;
+       
+      }
+      button {
+        width: 80px;
+        height: 25px;
+        font-size: 15px;
+        padding: 0px;
+        background-color: #555;
+        color: #fff;
+        border: none;
+        border-radius: 0px 5px 5px 0px;
+        cursor: pointer;
+        margin: 0px;
+      }
+      
+      button:hover {
+        background-color: #666;
+      }
+      #title {
+        margin-top: 5px;
+        margin-botton: 0px;
+        height: 15px;
+        font-size: 24px;
+      }
+    </style>
+  </head>
+  <body>
+  <div id=&quot;everything&quot;>
+    <h1 id=&quot;title&quot; style=&quot;text-align: center;&quot;>Wordle 2</h1>
+    <div class=&quot;wordle-row&quot; id=&quot;row-1&quot;>
+      <div class=&quot;wordle-box&quot; id=&quot;box-1&quot;></div>
+      <div class=&quot;wordle-box&quot; id=&quot;box-2&quot;></div>
+      <div class=&quot;wordle-box&quot; id=&quot;box-3&quot;></div>
+      <div class=&quot;wordle-box&quot; id=&quot;box-4&quot;></div>
+      <div class=&quot;wordle-box&quot; id=&quot;box-5&quot;></div>
+    </div>
+    <div class=&quot;wordle-row&quot; id=&quot;row-2&quot;>
+      <div class=&quot;wordle-box&quot; id=&quot;box-6&quot;></div>
+      <div class=&quot;wordle-box&quot; id=&quot;box-7&quot;></div>
+      <div class=&quot;wordle-box&quot; id=&quot;box-8&quot;></div>
+      <div class=&quot;wordle-box&quot; id=&quot;box-9&quot;></div>
+      <div class=&quot;wordle-box&quot; id=&quot;box-10&quot;></div>
+    </div>
+    <div class=&quot;wordle-row&quot; id=&quot;row-3&quot;>
+      <div class=&quot;wordle-box&quot; id=&quot;box-11&quot;></div>
+      <div class=&quot;wordle-box&quot; id=&quot;box-12&quot;></div>
+      <div class=&quot;wordle-box&quot; id=&quot;box-13&quot;></div>
+      <div class=&quot;wordle-box&quot; id=&quot;box-14&quot;></div>
+      <div class=&quot;wordle-box&quot; id=&quot;box-15&quot;></div>
+    </div>
+    <div class=&quot;wordle-row&quot; id=&quot;row-4&quot;>
+      <div class=&quot;wordle-box&quot; id=&quot;box-16&quot;></div>
+      <div class=&quot;wordle-box&quot; id=&quot;box-17&quot;></div>
+      <div class=&quot;wordle-box&quot; id=&quot;box-18&quot;></div>
+      <div class=&quot;wordle-box&quot; id=&quot;box-19&quot;></div>
+      <div class=&quot;wordle-box&quot; id=&quot;box-20&quot;></div>
+    </div>
+    <div class=&quot;wordle-row&quot; id=&quot;row-5&quot;>
+      <div class=&quot;wordle-box&quot; id=&quot;box-21&quot;></div>
+      <div class=&quot;wordle-box&quot; id=&quot;box-22&quot;></div>
+      <div class=&quot;wordle-box&quot; id=&quot;box-23&quot;></div>
+      <div class=&quot;wordle-box&quot; id=&quot;box-24&quot;></div>
+      <div class=&quot;wordle-box&quot; id=&quot;box-25&quot;></div>
+    </div>
+    <div class=&quot;wordle-row&quot; id=&quot;row-6&quot;>
+      <div class=&quot;wordle-box&quot; id=&quot;box-26&quot;></div>
+      <div class=&quot;wordle-box&quot; id=&quot;box-27&quot;></div>
+      <div class=&quot;wordle-box&quot; id=&quot;box-28&quot;></div>
+      <div class=&quot;wordle-box&quot; id=&quot;box-29&quot;></div>
+      <div class=&quot;wordle-box&quot; id=&quot;box-30&quot;></div>
+    </div>
+    <div class=&quot;wordle-row&quot;>
+      <input type=&quot;text&quot; id=&quot;word-input&quot; maxlength=&quot;5&quot; />
+      <button onclick=&quot;submitWord()&quot;>Submit</button>
+    </div>
+    </div>
+    <script>
+      const targetWord = 'PIPPY';
+      let currentRow = 1;
+      
+      function submitWord() {
+        const wordInput = document.getElementById('word-input');
+        const word = wordInput.value.toUpperCase();
+        
+        if (word.length !== 5) {
+          alert('Please enter a 5-letter word');
+          return;
+        }
+        
+        const wordleBoxes = document.querySelectorAll(`#row-${currentRow} .wordle-box`);
+        
+        for (let i = 0; i < 5; i++) {
+          const box = wordleBoxes[i];
+          const letter = word[i];
+          
+          box.textContent = letter;
+          
+          if (letter === targetWord[i]) {
+            box.classList.add('correct');
+          } else if (targetWord.includes(letter)) {
+            box.classList.add('close');
+          } else {
+            box.classList.add('incorrect');
+          }
+        }
+        
+        currentRow++;
+        
+        if (currentRow > 6) {
+          alert('Game over!');
+        }
+        
+        if (
+          wordleBoxes[0].textContent === targetWord[0] &amp;&amp;
+          wordleBoxes[1].textContent === targetWord[1] &amp;&amp;
+          wordleBoxes[2].textContent === targetWord[2] &amp;&amp;
+          wordleBoxes[3].textContent === targetWord[3] &amp;&amp;
+          wordleBoxes[4].textContent === targetWord[4]
+        ) {
+          alert('Congratulations! You won!');
+          currentRow = 7;
+        }
+        
+        wordInput.value = '';
+      }
+    </script>
+  </body>
+</html>" frameborder="0" width="300" height="300"></iframe>
+    </body>
+  </html>
