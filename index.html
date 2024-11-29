@@ -240,6 +240,7 @@ const backBtnUnlocks = document.getElementById('back-btn-unlocks');
 
 letterSelect.addEventListener('change', (e) => {
   const selectedLetter = e.target.value;
+  const selectedIndex = e.target.selectedIndex;
   if (selectedLetter) {
     const letterUrl = letters[selectedLetter];
     const letterContentDiv = document.getElementById('letter-content');
@@ -254,8 +255,10 @@ letterSelect.addEventListener('change', (e) => {
         for (const iframe of iframes) {
           const iframeTitle = iframe.srcdoc.match(/<title>(.*?)<\/title>/)[1];
           const iframeCode = iframe.outerHTML;
-          const timestamp = new Date().getTime();
-          localStorage.setItem(`iframe-${timestamp}-${iframeTitle}`, iframeCode);
+          const existingKey = Object.keys(localStorage).find(key => key.startsWith(`iframe-${selectedIndex}-${iframeTitle}`));
+          if (!existingKey) {
+            localStorage.setItem(`iframe-${selectedIndex}-${iframeTitle}`, iframeCode);
+          }
         }
         document.getElementById('home-page').style.display = 'none';
         letterPage.style.display = 'block';
@@ -280,9 +283,9 @@ unlocksBtn.addEventListener('click', () => {
   iframeContainer.innerHTML = '';
   const iframeKeys = Object.keys(localStorage).filter(key => key.startsWith('iframe-'));
   iframeKeys.sort((a, b) => {
-    const timestampA = parseInt(a.split('-')[1]);
-    const timestampB = parseInt(b.split('-')[1]);
-    return timestampB - timestampA;
+    const indexA = parseInt(a.split('-')[1]);
+    const indexB = parseInt(b.split('-')[1]);
+    return indexA - indexB;
   });
   for (const key of iframeKeys) {
     const iframeCode = localStorage.getItem(key);
