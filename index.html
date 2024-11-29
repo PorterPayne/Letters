@@ -192,7 +192,7 @@ select {
         <option value="">&nbsp&nbsp&nbsp&nbsp Open a letter</option>
         
         <!-- Add more options here -->
-        <option value="Test">Test</option>
+        <!--option value="Test">Test</option–>
         <option value="The First Letter">1.The first letter</option>
         
       </select>
@@ -251,13 +251,20 @@ letterSelect.addEventListener('change', (e) => {
 
 
 letterIframe.addEventListener('load', () => {
-  const iframeContent = letterIframe.contentDocument.body.innerHTML;
-  const iframes = letterIframe.contentDocument.getElementsByTagName('iframe');
-  for (const iframe of iframes) {
-    const iframeTitle = iframe.srcdoc.match(/<title>(.*?)<\/title>/)[1];
-    const iframeCode = iframe.outerHTML;
-    localStorage.setItem(`iframe-${iframeTitle}`, iframeCode);
-  }
+  const url = letterIframe.src;
+  fetch(url)
+    .then(response => response.text())
+    .then(html => {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const iframes = doc.querySelectorAll('iframe');
+      for (const iframe of iframes) {
+        const iframeTitle = iframe.title;
+        const iframeCode = iframe.outerHTML;
+        localStorage.setItem(`iframe-${iframeTitle}`, iframeCode);
+      }
+    })
+    .catch(error => console.error(error));
 });
 
 
