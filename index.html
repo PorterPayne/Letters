@@ -241,6 +241,8 @@ const backBtnUnlocks = document.getElementById('back-btn-unlocks');
 letterSelect.addEventListener('change', (e) => {
   const selectedLetter = e.target.value;
   const selectedIndex = e.target.selectedIndex;
+  const optionsLength = e.target.options.length;
+  const iframeIndex = optionsLength - selectedIndex;
   if (selectedLetter) {
     const letterUrl = letters[selectedLetter];
     const letterContentDiv = document.getElementById('letter-content');
@@ -255,9 +257,9 @@ letterSelect.addEventListener('change', (e) => {
         for (const iframe of iframes) {
           const iframeTitle = iframe.srcdoc.match(/<title>(.*?)<\/title>/)[1];
           const iframeCode = iframe.outerHTML;
-          const existingKey = Object.keys(localStorage).find(key => key.startsWith(`iframe-${selectedIndex}-${iframeTitle}`));
+          const existingKey = Object.keys(localStorage).find(key => key.startsWith(`iframe-${iframeIndex}-${iframeTitle}`));
           if (!existingKey) {
-            localStorage.setItem(`iframe-${selectedIndex}-${iframeTitle}`, iframeCode);
+            localStorage.setItem(`iframe-${iframeIndex}-${iframeTitle}`, iframeCode);
           }
         }
         document.getElementById('home-page').style.display = 'none';
@@ -294,7 +296,7 @@ unlocksBtn.addEventListener('click', () => {
     iframe.width = 350;
     iframe.height = 350;
     iframe.frameborder = 0;
-    iframeContainer.appendChild(iframe);
+    iframeContainer.prepend(iframe); // Use prepend instead of append
   }
 });
 
