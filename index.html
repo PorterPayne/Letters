@@ -194,7 +194,7 @@ select {
         
       </select>
       <button class="menu-button" id="unlocks-btn">Extras</button>
-      <!--button class="menu-button" id="filler-btn">Filler</button-->
+      <button class="menu-button" id="filler-btn">Comments</button>
       <div id="foto"></div>
     </div>
   </div>
@@ -222,6 +222,15 @@ select {
 <div id="loading-screen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.5); display: none; justify-content: center; align-items: center; flex-direction: column;">
   <span id="loading-text">Opening letter...</span>
   <span>💌</span>
+</div>
+
+
+<div id="comments-page" style="display: none;">
+  <div class="headings">
+    <button class="back-btn" id="back-btn-comments">《&nbsp&nbsp</button>
+    <h1 id="comments-title">Comments</h1>
+  </div>
+  <div id="utterances-container"></div>
 </div>
 
 
@@ -339,6 +348,31 @@ document.addEventListener('click', () => {
   } else if (elem.msRequestFullScreen) {
     elem.msRequestFullScreen();
   }
+});
+
+
+const commentsBtn = document.getElementById('filler-btn');
+const commentsPage = document.getElementById('comments-page');
+const backBtnComments = document.getElementById('back-btn-comments');
+
+
+commentsBtn.addEventListener('click', () => {
+  document.getElementById('home-page').style.display = 'none';
+  commentsPage.style.display = 'block';
+  const script = document.createElement('script');
+  script.src = 'https://utteranc.es/client.js';
+  script.async = true;
+  script.repo = 'PorterPayne/Letters';
+  script.issueTerm = 'pathname';
+  script.theme = 'github-light';
+  script.crossorigin = 'anonymous';
+  document.getElementById('utterances-container').appendChild(script);
+});
+
+
+backBtnComments.addEventListener('click', () => {
+  commentsPage.style.display = 'none';
+  document.getElementById('home-page').style.display = 'flex';
 });
 
 
