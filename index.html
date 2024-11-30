@@ -104,6 +104,13 @@
       overflow-y: hidden;
       height: 100vh;
     }
+    #comments-page {
+      align-items: center;
+      padding: 0px;
+      overflow-y: hidden;
+      height: 100vh;
+      z-index: 3;
+    }
 
 
     #iframe-container {
@@ -147,6 +154,7 @@
   display: flex;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   height: 60px;
+  font-size: 18px
 }
 
 
@@ -155,6 +163,12 @@
   padding: 10px 0px;
   width: 100%;
   font-size: 36px;
+}
+#comments-title {
+  margin: 0px;
+  padding: 10px 0px;
+  width: 100%
+  transform: none;
 }
 
 
@@ -177,8 +191,28 @@ select {
   color: #fff;
   cursor: pointer;
   text-align: center;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
     }
+    #comments-iframe {
+      width: 100vw;
+      height: 90vh;
+      margin: 0px;
+      padding: 0px;
+      z-index: 0;
+      overflow-y: auto;
+    }
+    
+    
+#iframe-wrapper {
+  overflow-y: hidden;
+  height: 90vh;
+}
+
+
+#iframe-wrapper iframe {
+  margin-top: -66px;
+  height: calc(90vh + 66px);
+}
   </style>
 </head>
 <body>
@@ -230,7 +264,9 @@ select {
     <button class="back-btn" id="back-btn-comments">《&nbsp&nbsp</button>
     <h1 id="comments-title">Comments</h1>
   </div>
-  <div id="utterances-container"></div>
+<div id="iframe-wrapper">
+  <iframe id="comments-iframe" src="" frameborder="0" width="100vw" height="90vh"></iframe>
+</div>
 </div>
 
 
@@ -359,14 +395,8 @@ const backBtnComments = document.getElementById('back-btn-comments');
 commentsBtn.addEventListener('click', () => {
   document.getElementById('home-page').style.display = 'none';
   commentsPage.style.display = 'block';
-  const script = document.createElement('script');
-  script.src = 'https://utteranc.es/client.js';
-  script.async = true;
-  script.repo = 'PorterPayne/Letters';
-  script.issueTerm = 'pathname';
-  script.theme = 'github-light';
-  script.crossorigin = 'anonymous';
-  document.getElementById('utterances-container').appendChild(script);
+  const iframe = document.getElementById('comments-iframe');
+  iframe.src = 'https://docs.google.com/document/d/10bN6wSyKS-CxDV8dLHPMmfpNreNtQZLwtinHLuPab4A/edit?usp=drivesdk'; // Replace with your Google Doc link
 });
 
 
