@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Local Storage Manager</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 1;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      table-layout: fixed;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      overflow: hidden;
+    }
+    th:first-child {
+      width: 50%;
+      text-overflow: ellipsis;
+    }
+    th:nth-child(2) {
+      width: fit-content;
+    }
+    th:nth-child(3) {
+      width: fit-content;
+    }
+    td:first-child {
+      word-break: break-word;
+    }
+    button {
+      cursor: pointer;
+      margin: 2px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Local Storage Manager</h1>
+  <p id="storage-info"></p>
+  <label for="sort-select">Sort by:</label>
+  <select id="sort-select">
+    <option value="alphabetical">Alphabetical</option>
+    <option value="size">Size</option>
+  </select>
+  <button id="sort-direction-button">Ascending</button>
+  <table id="storage-table">
+    <thead>
+      <tr>
+        <th>Key</th>
+        <th>Size</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="storage-tbody">
+    </tbody>
+  </table>
+  <script>
+    const storageTable = document.getElementById('storage-table');
+    const storageTbody = document.getElementById('storage-tbody');
+    const storageInfo = document.getElementById('storage-info');
+    const sortSelect = document.getElementById('sort-select');
+    const sortDirectionButton = document.getElementById('sort-direction-button');
+    let sortDirection = 1; // 1 for ascending, -1 for descending
+
+    // Calculate total storage used
+    function updateStorageInfo() {
+     let totalSize = 0;
+      try {
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          const value = localStorage.getItem(key);
+          totalSize += value.length;
+        }
+      } catch (e) {
+        console.error(e);
+      }
+      const totalSizeKB = (totalSize / 1024).toFixed(2) + ' KB';
+      const storageLimit = 5 * 1024 * 1024; // 5MB
+      const freeSpace = storageLimit - totalSize;
+      const freeSpaceKB = (freeSpace / 1024).toFixed(2) + ' KB';
+      const usagePercentage = ((totalSize / storageLimit) * 100).toFixed(2) + '%';
+      const usagePercentageColor = usagePercentage >= 95 ? 'red' : usagePercentage >= 80 ? 'orange' : 'green';
+      storageInfo.innerHTML = `<b>Total Storage:</b> <br>${totalSizeKB} / ${storageLimit / 1024} KB <br>(${freeSpaceKB} free, <font color="${usagePercentageColor}">${usagePercentage} used</font>)`;
+    }
+    updateStorageInfo();
+
+    // Populate table with local storage items
+    function populateTable(sortBy) {
+      storageTbody.innerHTML = '';
+      try {
+        const keys = [];
+        for (let i = 0; i < localStorage.length; i++) {
+          keys.push(localStorage.key(i));
+        }
+        let sortedKeys;
+        if (sortBy === 'alphabetical') {
+          sortedKeys = keys.sort((a, b) => a.localeCompare(b, undefined, {sensitivity: 'base'}));
+          if (sortDirection === -1) {
+            sortedKeys = sortedKeys.reverse();
+          }
+        } else if (sortBy === 'size') {
+          sortedKeys = keys.sort((a, b) => {
+            const aValue = localStorage.getItem(a);
+            const bValue = localStorage.getItem(b);
+            return (aValue.length - bValue.length) * sortDirection;
+          });
+        }
+        sortedKeys.forEach((key) => {
+          const value = localStorage.getItem(key);
+          const size = (value.length / 1024).toFixed(2) + ' KB';
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td title="${key}">${key}</td>
+            <td>${size}</td>
+            <td>
+              <button onclick="viewItem('${key}')">View</button>
+              <button onclick="renameItem('${key}')">Rename</button>
+              <button onclick="deleteItem('${key}')">Delete</button>
+            </td>
+          `;
+          storageTbody.appendChild(row);
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    populateTable('alphabetical');
+
+    sortSelect.addEventListener('change', () => {
+      populateTable(sortSelect.value);
+    });
+
+    sortDirectionButton.addEventListener('click', () => {
+      sortDirection *= -1; // Switch sort direction
+      populateTable(sortSelect.value);
+      if (sortDirection === 1) {
+        sortDirectionButton.innerText = 'Ascending';
+      } else {
+        sortDirectionButton.innerText = 'Descending';
+      }
+    });
+
+    // View item function
+    function viewItem(key) {
+      const value = localStorage.getItem(key);
+      alert(`Key: ${key}\nValue: ${value}`);
+    }
+
+    // Rename item function
+    function renameItem(key) {
+      const newValue = prompt(`Enter new key for ${key}:`);
+      if (newValue !== null && newValue !== '') {
+        localStorage.setItem(newValue, localStorage.getItem(key));
+        localStorage.removeItem(key);
+        populateTable(sortSelect.value);
+        updateStorageInfo();
+      }
+    }
+
+    // Delete item function
+    function deleteItem(key) {
+      if (confirm(`Delete ${key}?`)) {
+        localStorage.removeItem(key);
+        populateTable(sortSelect.value);
+        updateStorageInfo();
+      }
+    }
+  </script>
+</body>
+</html>
