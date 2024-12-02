@@ -12,6 +12,7 @@
       background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAYAAABxLuKEAAAAAXNSR0IArs4c6QAAAv1JREFUeF7tm9t1wjAMQGGCzsD+P12lE3SFMgE9AVwcI1lP23JjPpPYka5kvYDz7evndpJ8vj9Op8tVskL/bM93FVKexWD0ak61coFBzLXAdAWzxYb0yeMRdj3gIfP3mFz5HA52PSCUTaR3MEkByNKcbAQBwJTn7OcFTqjXHkyp1CY4dK0mbEQwCr1eYDwV4uw1wltqBi3kaQNmE6AGpycUShYoSexiDMfKyCaoISIFXKGh2nlMohUpRQsMVQ++kCtojsHAnudNBaah8HTtBcUr3XruwzAUXOAJXM5T3kh74ZUv0+UiKeMpS70lYLicpzCR9lpgunbXkUyvlMW/u1YKEm3ZAuN+lPI2HmrpW7gAlSmp+wKZdB4j7DsE8uCPUrUVdV8oxBxgKENQ94VQtsd1YLBWXtNHcYSWdP7lfkqZ9GBKOEoBOFyqsx1qA6VcNjAJjvLllE67+xqvMchlByPSzvDwAlOBJ4Fj8BZb8DUY37SUA8cIZU4wWEZMtB2gzAumQ7kwT/CFzp9jC1BuPzcYU7CqLz42mDShBCaVxwVDNJ0LTH6isoxmB1O6occAvdespxK8bWDKjT2yRIMRQjXMIobUg2lVgfYGg1CLB6ZD8cbJ8nowrUtzj2PJIUB6TCWnk2fUaWr29h6PQK6E8/AY6yB5sHWVuleXwT8c0nSoA63bFkyKGRooLSQbvKct+A4WvuXr9zHmyN6SV9v375U+b/v/Kx0RTpl8LtcF5n4cgaw81mN6NYtUMCLB9DxGQXqiP2aFPC+P6QmldTtBeQh2P4PzANMbShLMWnFrAdTWPWUaW8dEBPP05rFgyiPl5blFTbLLPMx3jAfj3YoANYn4z2imHw61ON8eezpNFmN4jAeQWkBXzItoMNisJfIMxqFGon8yD9GOmk1yWY0y8v59wnV1ZsTnbmd+zuDV/xuMgewCg8CTxxjMCtGOkcFbtqUxwQQYR8jSdQ9vcUi1Rme5L6fB9B4RTAUGg9MqrhhrkH4eA5XbraCMeBdA8hc+kg4zuf+zpwAAAABJRU5ErkJggg==');
       background-size: 50%;
       overflow-y: hidden;
+      overflow-x: hidden;
       margin: 0px;
       padding: 0px;
     }
@@ -139,6 +140,7 @@
   height: 320px;
   border: none;
   margin: 5px;
+  margin-bottom: 15px;
   padding: 0px;
   flex-shrink: 0;
   overflow-y: hidden;
@@ -157,6 +159,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   height: 60px;
   font-size: 18px
+  z-index: 10;
 }
 
 
@@ -195,25 +198,31 @@ select {
   text-align: center;
   margin-bottom: 10px;
     }
+    
+    
+    
     #comments-iframe {
-      width: 100vw;
-      height: 80vh;
+      width: 110vw;
+      height: 100vh;
       margin: 0px;
+      margin-left: -3.2vw;
+      margin-top: -100px;
+      overflow-x: hidden;
+      display: block;
       padding: 0px;
-      z-index: 0;
+      z-index: 1;
       overflow-y: auto;
+      box-shadow: 10px 0 10px rgba(0, 0, 0, 0.3);
     }
     
     
 #iframe-wrapper {
   overflow-y: hidden;
-  height: 80vh;
-}
-
-
-#iframe-wrapper iframe {
-  margin-top: -66px;
-  height: calc(80vh + 66px);
+  overflow-x: hidden;
+  height: 100vh;
+ // background-color: #a3c1f3;
+  z-index: 1;
+  padding-top: 20px;
 }
   </style>
 </head>
@@ -231,7 +240,7 @@ select {
         
       </select>
       <button class="menu-button" id="unlocks-btn">Extras</button>
-      <button class="menu-button" id="filler-btn">Comments</button>
+      <button class="menu-button" id="filler-btn">Mission</button>
       <div id="foto"></div>
     </div>
   </div>
@@ -263,20 +272,19 @@ select {
 
 
 <div id="comments-page" style="display: none;">
+  <div style="position: absolute; height: 60px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); z-index: 1000;"></div>
   <div class="headings">
     <button class="back-btn" id="back-btn-comments">《&nbsp&nbsp</button>
-    <h1 id="comments-title">Comments</h1>
+    <h1 id="comments-title">Mission</h1>
   </div>
 <div id="iframe-wrapper">
-  <iframe id="comments-iframe" src="" frameborder="0" width="100vw" height="80vh"></iframe>
+  <iframe id="comments-iframe"></iframe>
 </div>
 
 
-<a href="https://docs.google.com/document/d/10bN6wSyKS-CxDV8dLHPMmfpNreNtQZLwtinHLuPab4A/edit">
-  <button class="menu-button" style="width: 40vw; margin: 10px 30vw;">Edit Comment</button>
+<a style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);" href="https://docs.google.com/document/d/10bN6wSyKS-CxDV8dLHPMmfpNreNtQZLwtinHLuPab4A/edit">
+  <!--button class="menu-button" style="width: 40vw; margin: 10px 30vw;">Edit Comment</button-->
 </a>
-
-
 </div>
 
 
