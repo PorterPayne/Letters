@@ -1,0 +1,37 @@
+
+  <html>
+    <head>
+      <title>ExtrasFixer</title>
+    </head>
+    <body>
+      &nbsp; &nbsp; &nbsp;<div>&nbsp; &nbsp; &nbsp;Hi maren!!!</div><div><br></div><div>I dont know how else to fix the extras page besides doing this. So i need you to follow my instructions.</div><div><br></div><div>1. Click the button!</div><div>2. The files are in alphabetical order, so go to where there are files labeled iframe-...... they all have different names. Delete all of them.</div><div>3. Come back to this page! Now. Very important. Do not open this letter again once you press the back button.</div><div>4. Check to make sure that "extras" is empty.</div><div>5. Open the other letters, but do not open this one again.</div><div>6. The extras page should be fixed now. Let me know I can delete this letter now!</div><div><br></div><div>Questions?</div><div><br></div><div><br></div><div><div style="text-align: center;">You're the best! Thanks for being patient and testing</div><div style="text-align: center;">things with me!!!!!!</div><div style="text-align: center;"><br></div><div style="text-align: center;"><iframe srcdoc="<html>
+<head>
+  <title>Click Here Button</title>
+  <style>
+    body {
+      width: 300px;
+      height: 300px;
+      //border: 1px solid #000;
+      margin: 0px;
+      padding: 0px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #everything {
+      border: 1px solid #F00;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <button onclick=&quot;window.open('https://raw.githubusercontent.com/PorterPayne/Letters/refs/heads/main/Letters/LocalStorage%20check.txt', '_blank')&quot;>Click Here</button>
+</body>
+</html>" frameborder="0" width="300" height="300"></iframe><br></div><div style="text-align: center;"><br></div><div style="text-align: center;">Love you😘</div><div style="text-align: center;"><br></div><div style="text-align: center;"><br></div></div>
+    </body>
+  </html>
