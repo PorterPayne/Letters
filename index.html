@@ -29,7 +29,6 @@
       background-size: 50%;
       font-size: 25px;
         }
-    
     #home-page { 
       display: flex; 
       flex-direction: column; 
@@ -66,6 +65,19 @@
       background-color: #FFB2F9; 
       color: #fff; cursor: pointer; 
       text-align: center; 
+    }
+    
+    .small-button { 
+      width: 100px; 
+      height: 30px; 
+      font-size: 15px; 
+      border: 2px solid #FF99FF; 
+      border-radius: 5px; 
+      background-color: #FFB2F9; 
+      color: #fff; cursor: pointer; 
+      text-align: center; 
+      margin: 0px;
+      margin-top: 5px;
     }
     
     .back-btn { 
@@ -110,6 +122,7 @@
       padding: 0px;
       overflow-y: hidden;
       height: 100vh;
+      width: 100vw;
       z-index: 3;
     }
 
@@ -183,6 +196,12 @@
   width: 100%;
   font-size: 36px;
 }
+.title {
+  margin: 0px;
+  padding: 10px 0px;
+  width: 100%;
+  font-size: 36px;
+}
 
 
 select {
@@ -197,33 +216,48 @@ select {
   cursor: pointer;
   text-align: center;
   margin-bottom: 10px;
+  margin-top: 10px;
     }
     
-    
-    
     #comments-iframe {
-      width: 110vw;
+      width: 100vw;
       height: 100vh;
       margin: 0px;
-      margin-left: -3.2vw;
-      margin-top: -100px;
+      margin-left: 0vw;
+      top: 60px;
       overflow-x: hidden;
       display: block;
       padding: 0px;
       z-index: 1;
       overflow-y: auto;
-      box-shadow: 10px 0 10px rgba(0, 0, 0, 0.3);
+      position: absolute;
+    }
+    #letter-editor {
+      width: 100vw;
+      height: 87vh;
+      margin: auto;
+      top: 80px;
+      overflow-x: auto;
+      display: block;
+      padding: 0px;
+      z-index: 9;
+      overflow-y: hidden;
+      position: absolute;
     }
     
+    #mission-iframe {
+      width: 100vw;
+      height: 87vh;
+      margin: auto;
+      top: 80px;
+      overflow-x: auto;
+      display: block;
+      padding: 0px;
+      z-index: 9;
+      overflow-y: hidden;
+      position: absolute;
+    }
     
-#iframe-wrapper {
-  overflow-y: hidden;
-  overflow-x: hidden;
-  height: 100vh;
- // background-color: #a3c1f3;
-  z-index: 1;
-  padding-top: 20px;
-}
   </style>
 </head>
 <body>
@@ -231,7 +265,17 @@ select {
     <h1 id="home-title">Love<br>Letters</h1>
     <div id="button-container">
       <select class="menu-button2" id="letter-select">
-        <option value="">&nbsp&nbsp&nbsp&nbsp Open a letter</option>
+        <option value="">&nbsp&nbsp&nbsp&nbsp Dear Maren...</option>
+        
+        <!-- Add more options here -->
+        <option value="Extras Fixer">I need your help😁</option>
+        <option value="For you my darling">2. For you my darling</option>
+        <option value="The First Letter">1. The first letter</option>
+        
+      </select>
+      
+      <select class="menu-button2" id="letter-select2">
+        <option value="">&nbsp&nbsp&nbsp&nbsp Dear Porter...</option>
         
         <!-- Add more options here -->
         <option value="Extras Fixer">I need your help😁</option>
@@ -240,7 +284,8 @@ select {
         
       </select>
       <button class="menu-button" id="unlocks-btn">Extras</button>
-      <button class="menu-button" id="filler-btn">Mission</button>
+      <button class="menu-button" id="new-page-btn">Mission</button>
+      <button class="menu-button" id="filler-btn">Write a Letter</button>
       <div id="foto"></div>
     </div>
   </div>
@@ -272,19 +317,35 @@ select {
 
 
 <div id="comments-page" style="display: none;">
-  <div style="position: absolute; height: 60px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); z-index: 1000;"></div>
   <div class="headings">
     <button class="back-btn" id="back-btn-comments">《&nbsp&nbsp</button>
-    <h1 id="comments-title">Mission</h1>
+    <h1 id="comments-title">Write a Letter</h1>
+    <!--button class="small-button" id="comment-btn" style="position: absolute; right: 10px; top: 10px;">comments</button-->
   </div>
-<div id="iframe-wrapper">
-  <iframe id="comments-iframe"></iframe>
+    <iframe id="letter-editor" src="https://raw.githubusercontent.com/PorterPayne/Letters/refs/heads/main/Letters/Letter%20editor.txt"></iframe>
 </div>
 
 
-<a style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);" href="https://docs.google.com/document/d/10bN6wSyKS-CxDV8dLHPMmfpNreNtQZLwtinHLuPab4A/edit">
-  <!--button class="menu-button" style="width: 40vw; margin: 10px 30vw;">Edit Comment</button-->
-</a>
+<div id="comment-form-page" style="display: none;">
+  <div class="headings">
+    <button class="back-btn" id="back-btn-comment-form">《&nbsp&nbsp</button>
+    <h1 id="comment-form-title">Comments</h1>
+  </div>
+  <div id="comment-form-iframe-wrapper">
+    
+  </div>
+</div>
+
+
+
+
+<!-- Add the new page container -->
+<div id="new-page" style="display: none;">
+  <div class="headings">
+    <button class="back-btn" id="back-btn-new-page">《&nbsp&nbsp</button>
+    <h1 class="title">Mission</h1>
+  </div>
+  <iframe id="mission-iframe"></iframe>
 </div>
 
 
@@ -334,6 +395,54 @@ letterSelect.addEventListener('change', (e) => {
           }
         }
         document.getElementById('loading-screen').style.display = 'none'; // Hide the loading screen
+        document.getElementById('home-page').style.display = 'none';
+        letterPage.style.display = 'block';
+      })
+      .catch(error => console.error('Error:', error));
+  }
+});
+
+
+const letterSelect2 = document.getElementById('letter-select2');
+
+
+// Duplicate the event listener code for letterSelect
+letterSelect2.addEventListener('change', (e) => {
+  const selectedLetter = e.target.value;
+  const selectedIndex = e.target.selectedIndex;
+  const optionsLength = e.target.options.length;
+  const iframeIndex = optionsLength - selectedIndex;
+
+
+  if (selectedLetter) {
+    document.getElementById('loading-screen').style.display = 'flex';
+
+
+    const letterUrl = letters[selectedLetter];
+    const letterContentDiv = document.getElementById('letter-content');
+    document.getElementById('letter-title').innerText = `${selectedLetter.replace('letter', '')}`;
+
+
+    fetch(letterUrl)
+      .then(response => response.text())
+      .then(html => {
+        const letterContentDiv = document.getElementById('letter-content');
+        letterContentDiv.innerHTML = html;
+
+
+        // Scan for iframes and save their code to localStorage
+        const iframes = letterContentDiv.getElementsByTagName('iframe');
+        for (const iframe of iframes) {
+          const iframeTitle = iframe.srcdoc.match(/<title>(.*?)<\/title>/)[1];
+          const iframeCode = iframe.outerHTML;
+          const existingKey = Object.keys(localStorage).find(key => key.startsWith(`iframe-${iframeIndex}-${iframeTitle}`));
+          if (!existingKey) {
+            localStorage.setItem(`iframe-${iframeIndex}-${iframeTitle}`, iframeCode);
+          }
+        }
+
+
+        document.getElementById('loading-screen').style.display = 'none';
         document.getElementById('home-page').style.display = 'none';
         letterPage.style.display = 'block';
       })
@@ -393,6 +502,32 @@ backBtnUnlocks.addEventListener('click', () => {
 });
 
 
+// Get the new page elements
+const newPage = document.getElementById('new-page');
+const backBtnNewPage = document.getElementById('back-btn-new-page');
+const newPageBtn = document.getElementById('new-page-btn'); // You'll need to add a button to navigate to the new page
+
+
+// Add event listener to the new page button
+newPageBtn.addEventListener('click', () => {
+  document.getElementById('home-page').style.display = 'none';
+  newPage.style.display = 'block';
+});
+
+
+// Add event listener to the back button on the new page
+backBtnNewPage.addEventListener('click', () => {
+  newPage.style.display = 'none';
+  document.getElementById('home-page').style.display = 'flex';
+});
+
+
+ const missionIframe = document.getElementById('mission-iframe');
+  missionIframe.src = 'https://docs.google.com/document/d/10bN6wSyKS-CxDV8dLHPMmfpNreNtQZLwtinHLuPab4A/edit?usp=drivesdk';
+
+
+
+
 document.addEventListener('click', () => {
   const elem = document.documentElement;
   if (elem.requestFullscreen) {
@@ -410,13 +545,22 @@ document.addEventListener('click', () => {
 const commentsBtn = document.getElementById('filler-btn');
 const commentsPage = document.getElementById('comments-page');
 const backBtnComments = document.getElementById('back-btn-comments');
+const letterEditor = document.getElementById('letter-editor');
 
 
-commentsBtn.addEventListener('click', () => {
+commentsBtn.addEventListener('click', async () => {
   document.getElementById('home-page').style.display = 'none';
   commentsPage.style.display = 'block';
-  const iframe = document.getElementById('comments-iframe');
-  iframe.src = 'https://docs.google.com/document/d/10bN6wSyKS-CxDV8dLHPMmfpNreNtQZLwtinHLuPab4A/edit?usp=drivesdk'; // Replace with your Google Doc link
+
+
+  const url = 'https://raw.githubusercontent.com/PorterPayne/Letters/refs/heads/main/Letters/Letter%20editor.txt'; // Update this URL
+  try {
+    const response = await fetch(url);
+    const html = await response.text();
+    letterEditor.srcdoc = html;
+  } catch (error) {
+    console.error('Error loading HTML:', error);
+  }
 });
 
 
@@ -426,6 +570,21 @@ backBtnComments.addEventListener('click', () => {
 });
 
 
+const commentBtn = document.getElementById('comment-btn');
+const commentFormPage = document.getElementById('comment-form-page');
+const backBtnCommentForm = document.getElementById('back-btn-comment-form');
+
+
+commentBtn.addEventListener('click', () => {
+  document.getElementById('comments-page').style.display = 'none';
+  commentFormPage.style.display = 'block';
+});
+
+
+backBtnCommentForm.addEventListener('click', () => {
+  commentFormPage.style.display = 'none';
+  document.getElementById('comments-page').style.display = 'block';
+});
 </script>
 </body>
 </html>
