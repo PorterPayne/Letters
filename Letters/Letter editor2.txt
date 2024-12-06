@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Letter Editor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #111;
+      overscroll-behavior-y: none;
+    }
+    #editor {
+      width: 95%;
+      height: 100%;
+      border: 2px solid #000;
+      border-radius: 5px;
+      box-shadow: none;
+      overflow-y: auto;
+      transform-origin: 0 0;
+      background-color: #333434;
+      color: #FFF;
+      font-size: 12px;
+      zoom: 1;
+    }
+    #editor img {
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      border-radius: 5px;
+      max-width: 80vw;
+      max-height: 45vh;
+    }
+    #editor img, 
+    #editor audio {
+      display: block; 
+      margin: auto;
+    }
+    #toolbar-row-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 95%;
+    }
+    #toolbar-row-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 60%;
+    }
+    #flexbox {
+      flex-direction: column;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      height: 89vh;
+      padding: 10px 0px 0px 0px
+    }
+    #title-box {
+      width: 95%;
+      height: 12px;
+      padding: 5px 0px;
+      border: 2px solid #000;
+      border-radius: 5px;
+      background-color: #333334;
+      color: #FFF;
+      font-size: 12px;
+    }
+    .drop {
+      max-width: 75px;
+      height: 25px;
+      background-color: #123444;
+      border: 2px solid #000;
+      color: #fff;
+    }
+    .r1b {
+      width: 75px;
+      height: 25px;
+      background-color: #123444;
+      border: 2px solid #000;
+      color: #fff;
+    }
+    .r2b {
+      width: 100px;
+      padding: 5px 0px;
+      background-color: #123444;
+      border: 2px solid #000;
+      color: #fff;
+    }
+    #alignment {
+      position: absolute;
+      z-index: 10;
+      margin-bottom: 40%;
+      right: 0%;
+      margin-right: 12px;
+    }
+    .align {
+      width: 25px;
+      height: 25px;
+      background-color: #123444;
+      border: 2px solid #000;
+      color: #fff;
+    }
+  </style>
+</head>
+<body oncontextmenu="return false;">
+  <div id="flexbox">
+    <div id="toolbar-row-top">
+      <button class="r1b" id="insert-hyperlink">Link</button>
+      <button class="r1b" id="insert-media">Media</button>
+      <select class="drop" id="iframe-select"></select>
+      <select class="drop" id="file-select" style="display: none"></select>
+      <select id="font-size-select" class="drop">
+  <option value="8px">8px</option>
+  <option value="10px">10px</option>
+  <option value="12px">12px</option>
+  <option value="14px">14px</option>
+  <option value="16px">16px</option>
+  <option value="18px">18px</option>
+  <option value="20px">20px</option>
+</select>
+    </div>
+    <input type="file" id="media-input" style="display: none;" accept="image/*,audio/*,video/*">
+    <input type="file" id="file-input" style="display: none;">
+    <div id="editor" contenteditable="true"></div>
+    <input type="text" id="title-box" placeholder="Enter title here">
+    <div id="toolbar-row-bottom">
+    <div id="alignment">
+    <button class="align" id="align-left"><</button>
+    <button class="align" id="align-center">+</button>
+    <button class="align" id="align-right">></button>
+  </div>
+      <button class="r2b" id="download-content">Download</button>
+      <button class="r2b" id="open-file">Open</button>
+    </div>
+  </div>
+  <input type="file" id="iframe-input" style="display: none;">
+  
+  <script>
+    const editor = document.getElementById('editor');
+    const insertMediaBtn = document.getElementById('insert-media');
+    const downloadContentBtn = document.getElementById('download-content');
+    const openFileBtn = document.getElementById('open-file');
+    const fileInput = document.getElementById('file-input');
+    const mediaInput = document.getElementById('media-input');
+    const iframeInput = document.getElementById('iframe-input');
+    const titleBox = document.getElementById('title-box');
+    const insertHyperlinkBtn = document.getElementById('insert-hyperlink');
+    const iframeSelect = document.getElementById('iframe-select');
+    const fileSelect = document.getElementById('file-select');
+    let zoomLevel = 1;
+
+    // Populate dropdown menu with "mare-" files from local storage
+    const files = Object.keys(localStorage).filter(key => key.startsWith('mare-'));
+    const noneOption = document.createElement('option');
+    noneOption.value = '';
+    noneOption.textContent = 'None';
+    fileSelect.add(noneOption, 0);
+    files.forEach((file, index) => {
+      const option = document.createElement('option');
+      option.value = file;
+      option.textContent = file;
+      fileSelect.add(option, index + 1);
+    });
+
+    fileSelect.addEventListener('change', () => {
+      const selectedFile = fileSelect.value;
+      const fileContent = localStorage.getItem(selectedFile);
+      // Do something with the selected file content
+      console.log(fileContent);
+    });
+
+downloadContentBtn.addEventListener('click', async () => {
+  const title = titleBox.value;
+  const editorContent = editor.innerHTML;
+  const selectedFile = fileSelect.value;
+  let htmlContent = '';
+  if (selectedFile) {
+    const fileContent = localStorage.getItem(selectedFile);
+    htmlContent += ` 
+      <div style="display: none;"> 
+        <p>Selected File: ${selectedFile}</p> 
+        <p>File Content:</p> 
+        ${fileContent} 
+      </div> 
+    `;
+  }
+htmlContent += `
+  <html>
+    <head>
+      <title>${title}</title>
+    </head>
+    <body>
+      ${editorContent.replace(/<img/g, '<img style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); border-radius: 5px;"')}
+    </body>
+  </html>
+`;
+  const link = document.createElement('a');
+  link.href = 'data:text/plain,' + encodeURIComponent(htmlContent);
+  link.download = `${title}.txt`;
+  link.click();
+  // Clear editor and title box
+  editor.innerHTML = '';
+  titleBox.value = '';
+  // Clear local storage
+  localStorage.removeItem('editorContent');
+});
+
+insertMediaBtn.addEventListener('click', async () => {
+  mediaInput.click();
+});
+
+mediaInput.addEventListener('change', async () => {
+  const file = mediaInput.files[0];
+  const reader = new FileReader();
+  reader.addEventListener('load', async () => {
+    const fileDataUrl = reader.result;
+    const fileName = file.name;
+    const fileExtension = fileName.split('.').pop().toLowerCase();
+    if (fileExtension === 'gif' || fileExtension === 'jpg' || fileExtension === 'png' || fileExtension === 'jpeg') {
+      const image = document.createElement('img');
+      image.src = fileDataUrl;
+      insertMediaAtCursor(image);
+    } else if (['mp3', 'wav', 'ogg', 'm4a', 'aac', 'opus'].includes(fileExtension)) {
+      let newFileName;
+      if (fileExtension !== 'opus') {
+        newFileName = fileName.replace(`.${fileExtension}`, '.opus');
+      } else {
+        newFileName = fileName;
+      }
+      const audio = document.createElement('audio');
+      audio.controls = true;
+      audio.src = fileDataUrl;
+      audio.download = newFileName;
+      insertMediaAtCursor(audio);
+    } else {
+      console.log('Unsupported file type');
+    }
+    editor.focus();
+  });
+  reader.readAsDataURL(file);
+});
+
+openFileBtn.addEventListener('click', () => {
+  fileInput.click();
+});
+
+fileInput.addEventListener('change', () => {
+  const file = fileInput.files[0];
+  const reader = new FileReader();
+  reader.addEventListener('load', () => {
+    const fileContent = reader.result;
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(fileContent, 'text/html');
+    const title = doc.querySelector('title').textContent;
+    const editorContent = doc.querySelector('body').innerHTML;
+    titleBox.value = title;
+    editor.innerHTML = editorContent;
+  });
+  reader.readAsText(file);
+});
+
+const iframeFiles = Object.keys(localStorage).filter(key => key.startsWith('iframe-'));
+const iframeNoneOption = document.createElement('option');
+iframeNoneOption.value = '';
+iframeNoneOption.textContent = 'None';
+iframeSelect.add(iframeNoneOption, 0);
+iframeFiles.forEach((file, index) => {
+  const option = document.createElement('option');
+  option.value = file;
+  option.textContent = file;
+  iframeSelect.add(option, index + 1);
+});
+
+iframeSelect.addEventListener('change', async () => {
+  const selectedFile = iframeSelect.value;
+  const fileContent = localStorage.getItem(selectedFile);
+  const iframe = document.createElement('iframe');
+  iframe.srcdoc = fileContent;
+  iframe.frameBorder = 0;
+  iframe.width = 300;
+  iframe.height = 300;
+  insertMediaAtCursor(iframe);
+});
+
+document.addEventListener("gesturestart", function(e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gesturechange", function(e) {
+  e.preventDefault();
+  if (e.scale > 1) {
+    zoomLevel += 0.1;
+  } else {
+    zoomLevel -= 0.1;
+    if (zoomLevel < 0.1) {
+      zoomLevel = 0.1;
+    }
+  }
+  editor.style.zoom = zoomLevel;
+});
+
+insertHyperlinkBtn.addEventListener('click', async () => {
+  const url = prompt("Enter the URL:");
+  if (url) {
+    const text = prompt("Enter the text (leave blank for URL):");
+    const hyperlink = document.createElement('a');
+    hyperlink.href = url;
+    hyperlink.textContent = text || url;
+    hyperlink.style.color = 'green';
+    hyperlink.style.textDecoration = 'underline';
+    hyperlink.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.open(url, '_blank');
+    });
+    insertMediaAtCursor(hyperlink);
+  }
+});
+
+document.addEventListener("gestureend", function(e) {
+  e.preventDefault();
+});
+
+document.addEventListener("touchmove", function(e) {
+  if (window.scrollY === 0 && e.touches[0].clientY < 50) {
+    e.preventDefault();
+  }
+});
+
+// Save editor content to local storage on page close
+window.addEventListener('beforeunload', () => {
+  const editorContent = editor.innerHTML;
+  localStorage.setItem('editorContent', editorContent);
+});
+
+// Load editor content from local storage on page load
+const storedEditorContent = localStorage.getItem('editorContent');
+if (storedEditorContent) {
+  editor.innerHTML = storedEditorContent;
+}
+
+function insertMediaAtCursor(mediaElement) {
+  const selection = window.getSelection();
+  const range = selection.getRangeAt(0);
+  range.deleteContents();
+  range.insertNode(mediaElement);
+  selection.collapse(range.endContainer, range.endOffset);
+}
+
+const alignLeftBtn = document.getElementById('align-left');
+const alignCenterBtn = document.getElementById('align-center');
+const alignRightBtn = document.getElementById('align-right');
+
+let currentAlignment = 'left';
+
+alignLeftBtn.addEventListener('click', () => {
+  currentAlignment = 'left';
+  applyAlignment();
+});
+
+alignCenterBtn.addEventListener('click', () => {
+  currentAlignment = 'center';
+  applyAlignment();
+});
+
+alignRightBtn.addEventListener('click', () => {
+  currentAlignment = 'right';
+  applyAlignment();
+});
+
+function applyAlignment() {
+  editor.focus(); // Set focus back to the editor
+  const selection = window.getSelection();
+  if (selection.rangeCount > 0) {
+    const range = selection.getRangeAt(0);
+    const wrapper = document.createElement('div');
+    wrapper.style.textAlign = currentAlignment;
+    range.surroundContents(wrapper);
+  } else {
+    const existingStyle = editor.getAttribute('style');
+    editor.setAttribute('style', `${existingStyle}; text-align: ${currentAlignment};`);
+  }
+}
+
+const fontSizeSelect = document.getElementById('font-size-select');
+fontSizeSelect.addEventListener('change', () => {
+  const selectedFontSize = fontSizeSelect.value;
+  localStorage.setItem('currentFontSize', selectedFontSize);
+
+  const selection = window.getSelection();
+  if (selection.rangeCount > 0) {
+    const range = selection.getRangeAt(0);
+    const wrapper = document.createElement('span');
+    wrapper.style.fontSize = selectedFontSize;
+    range.surroundContents(wrapper);
+  }
+});
+
+editor.addEventListener('input', () => {
+  const currentFontSize = localStorage.getItem('currentFontSize');
+  const textNode = editor.childNodes[editor.childNodes.length - 1];
+  if (textNode.nodeType === Node.TEXT_NODE) {
+    const span = document.createElement('span');
+    span.style.fontSize = currentFontSize;
+    span.textContent = textNode.textContent;
+    editor.replaceChild(span, textNode);
+  } else if (textNode.nodeName === 'SPAN' && !textNode.style.fontSize) {
+    textNode.style.fontSize = currentFontSize;
+  }
+});
+
+</script>
+</body>
+</html>
