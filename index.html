@@ -46,6 +46,7 @@
       width: 235px; 
       border-left: 10px solid #FFF; 
       padding-left: 10px; 
+      margin: 30px
     }
     
     #button-container { 
@@ -120,7 +121,7 @@
     #comments-page {
       align-items: center;
       padding: 0px;
-      overflow-y: hidden;
+      overflow-y: auto;
       height: 100vh;
       width: 100vw;
       z-index: 3;
@@ -234,22 +235,22 @@ select {
     }
     #letter-editor {
       width: 100vw;
-      height: 87vh;
+      height: 100vh;
       margin: auto;
-      top: 80px;
-      overflow-x: auto;
+      top: 60px;
+      overflow-x: hidden;
       display: block;
       padding: 0px;
       z-index: 9;
-      overflow-y: hidden;
+      overflow-y: auto;
       position: absolute;
     }
     
     #mission-iframe {
       width: 100vw;
       height: 87vh;
-      margin: auto;
-      top: 80px;
+      margin: 0px;
+      top: 60px;
       overflow-x: auto;
       display: block;
       padding: 0px;
@@ -257,7 +258,6 @@ select {
       overflow-y: hidden;
       position: absolute;
     }
-    
   </style>
 </head>
 <body>
@@ -278,9 +278,9 @@ select {
         <option value="">&nbsp&nbsp&nbsp&nbsp Dear Porter...</option>
         
         <!-- Add more options here -->
-        <option value="Extras Fixer">I need your help😁</option>
+        <!--option value="Extras Fixer">I need your help😁</option>
         <option value="For you my darling">2. For you my darling</option>
-        <option value="The First Letter">1. The first letter</option>
+        <option value="The First Letter">1. The first letter</option-->
         
       </select>
       <button class="menu-button" id="unlocks-btn">Extras</button>
@@ -322,7 +322,7 @@ select {
     <h1 id="comments-title">Write a Letter</h1>
     <!--button class="small-button" id="comment-btn" style="position: absolute; right: 10px; top: 10px;">comments</button-->
   </div>
-    <iframe id="letter-editor" src="https://raw.githubusercontent.com/PorterPayne/Letters/refs/heads/main/Letters/Letter%20editor.txt"></iframe>
+    <iframe id="letter-editor" src="https://raw.githubusercontent.com/PorterPayne/Letters/refs/heads/main/Letters/Letter%20editor2.txt"></iframe>
 </div>
 
 
