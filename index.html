@@ -254,13 +254,21 @@
     
     #mission-iframe {
       width: 100vw;
-      height: 87vh;
-      margin: 0px;
-      top: 60px;
+      height: 100vh;
+      margin-top: 0px;
+      top: -60px;
       overflow-x: auto;
       display: block;
       padding: 0px;
       z-index: 9;
+      overflow-y: auto;
+      position: absolute;
+    }
+    
+    #wrapper {
+      width: 100vw;
+      height: 100vh;
+      top: 60px;
       overflow-y: hidden;
       position: absolute;
     }
@@ -352,7 +360,9 @@
     <button class="back-btn" id="back-btn-new-page">《&nbsp&nbsp</button>
     <h1 class="title">Mission</h1>
   </div>
+  <div id="wrapper">
   <iframe id="mission-iframe"></iframe>
+  </div>
 </div>
 
 
