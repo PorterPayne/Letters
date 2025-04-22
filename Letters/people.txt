@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preach My Gospel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
+        #title {
+            font-size: 22px;
+            z-index: 1;
+            padding: 10px;
+            margin: 0px 10px;
+        }
+        
+        #home {
+            font-size: 16px;
+            //z-index: 1;
+            padding: 0px;
+            margin: 14px 0px;
+            position: absolute;
+            left: 58px;
+        }
+        
+        /* Toolbar */
+        .toolbar {
+            height: 100vh;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #444;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            z-index: 3;
+        }
+        
+        .toolbar a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #fff;
+            display: block;
+            transition: 0.3s;
+        }
+        
+        .toolbar a:hover {
+            background-color: #555;
+        }
+        
+        /* Tab bar */
+        .tab-bar {
+            display: flex;
+            justify-content: space-between;
+            //gap: 10px;
+            flex-direction: row;
+            background-color: #222;
+            padding: 12px 0px;
+            border-top: 1px solid #555;
+            width: 100vw;
+            margin: 0px 0px;
+            overflow-x: hidden;
+            position: fixed;
+            bottom: 0px;
+        }
+        
+        #title-bar {
+            display: flex;
+            justify-content: right;
+            //gap: 10px;
+            flex-direction: row;
+            background-color: #222;
+            //padding: -20px 0px;
+            border-bottom: 1px solid #555;
+            width: 100vw;
+            margin: 0px 0px;
+            overflow-x: hidden;
+            position: fixed;
+            top: 0px;
+            z-index: 5;
+        }
+        
+        .tab {
+            height: 36px;
+            width: 70px;
+            cursor: pointer;
+            border-radius: 15px;
+            background-color: #444;
+            margin: 0px 5px;
+            align-items: center;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .tab:hover {
+            background-color: #555;
+        }
+        
+        .tab.active {
+            background-color: #666;
+        }
+        
+        /* Content */
+        .content {
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 50px;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        /* Open toolbar button */
+        .open-toolbar {
+            font-size: 24px;
+            cursor: pointer;
+            position: fixed;
+            top: 6px;
+            left: 20px;
+            z-index: 4;
+        }
+
+.person-item {
+  display: flex;
+  align-items: center;
+  margin: 0px;
+  margin-bottom: 10px; 
+  width: 80vw;
+}
+
+.person-status {
+  width: 22px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: green;
+  margin: 0px;
+  margin-right: 15px;
+}
+
+.person-info {
+  margin: 0px;
+  width: 100%;
+}
+
+.person-name {
+  font-size: 16px;
+  margin: 0px;
+  margin-right: 0px;
+  color: #ccc;
+  //width: 50%;
+}
+
+.person-age, .person-date {
+  font-size: 16px;
+  color: #ccc;
+  margin: 0px;
+  vertical-align: bottom;
+}
+
+.info-box {
+  background-color: transparent;
+  border: 2px solid #ccc;
+  color: #ccc;
+  width: 94%;
+}
+        
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+        
+    </style>
+</head>
+<body>
+    <div id="title-bar">
+        <h3 id="home">Personas</h3>
+        <h2 id="title">One Year Plan</h2>
+        <div class="open-toolbar" onclick="openToolbar()">☰</div>
+    </div>
+    
+    <div id="toolbar" class="toolbar">
+        <a href="#">Link 1</a>
+        <a href="#">Link 2</a>
+        <a href="#">Link 3</a>
+    </div>
+    
+<div class="content">
+  <p style="margin: 0px; width: 80%; padding: 0px; font-size: 14px;">Fecha bautismal esta semana</p>
+  <hr style="margin: 10px 0px; width: 100%;"></hr>
+  <div style="width: 90vw;" id="group-1"></div>
+  <hr style="height: 10px; width: 100vw; margin: 10px -20px; background-color: #666; border: none;"></hr>
+  
+  <p style="margin: 0px; width: 80%; padding: 0px; font-size: 14px;">Ha asistido recentamenta a una reunión sacramental</p>
+  <hr style="margin: 10px 0px; width: 100%;"></hr>
+  <div id="group-2"></div>
+  <hr style="height: 10px; width: 100vw; margin: 10px -20px; background-color: #666; border: none;"></hr>
+  
+  <p style="margin: 0px; width: 80%; padding: 0px; font-size: 14px;">Se le está enseñando</p>
+  <hr style="margin: 10px 0px; width: 100%;"></hr>
+  <div id="group-3"></div>
+  <hr style="height: 10px; width: 100vw; margin: 10px -20px; background-color: #666; border: none;"></hr>
+  
+  <p style="margin: 0px; width: 80%; padding: 0px; font-size: 14px;">Miembros nuevos</p>
+  <hr style="margin: 10px 0px; width: 100%;"></hr>
+  <div id="group-4"></div>
+  <hr style="height: 10px; width: 100vw; margin: 10px -20px; background-color: #666; border: none;"></hr>
+  
+  <p style="margin: 0px; width: 80%; padding: 0px; font-size: 14px;">Tiene interés</p>
+  <hr style="margin: 10px 0px; width: 100%;"></hr>
+  <div id="group-5"></div>
+  <hr style="height: 10px; width: 100vw; margin: 10px -20px; background-color: #666; border: none;"></hr>
+  
+  <p style="margin: 0px; width: 80%; padding: 0px; font-size: 14px;">No está progresando</p>
+  <hr style="margin: 10px 0px; width: 100%;"></hr>
+  <div id="group-6"></div>
+  <hr style="height: 10px; width: 100vw; margin: 10px -20px; background-color: #666; border: none;"></hr>
+</div>
+    
+    <button id="add-person" style="background-color: #8fc; border: none; border-radius: 10px; width: 60px; height: 60px; position: absolute; bottom: 75px; right: 15px;">+🧔‍♂️</button>
+    
+    <div class="tab-bar">
+        <div class="tab">🚬</div>
+        <div class="tab">⚰️</div>
+        <div class="tab">🧲</div>
+        <div class="tab">🔒</div>
+        <div class="tab">🪙</div>
+    </div>
+
+    
+    <form id="add-person-form">
+<div id="add-person-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center; z-index: 12;">
+  <div style="background-color: #333; padding: 0px; border-radius: 10px; width: 100vw; height: 90vh; z-index: 8; position: relative; display: flex; flex-direction: column;">
+    <div id="title-bar" style="flex-shrink: 0;">
+      <button type="button" id="cancel-add-person" style="background-color: transparent; border: none; border-radius: 10px; padding: 20px 20px; left: 5px; position: fixed;">✖️</button>
+        <h3 id="home">Agregar persona</h3>
+        <button type="submit" style="background-color: transparent; border: none; border-radius: 10px; padding: 10px 20px; height: 45px;">✔️</button>
+    </div>
+    <div class="content" style="overflow-y: auto; flex-grow: 1; margin-top: 0px;">
+  <p style="margin: 0px; width: 80%; padding: 0px; font-size: 14px;">Name</p>
+  <hr style="margin: 10px 0px; width: 100%;"></hr>
+  <input class="info-box" type="text" id="name" name="name" placeholder="Name" style="padding: 10px; margin-bottom: 10px; border-radius: 5px;">
+  <input class="info-box" type="text" id="last-name" name="last-name" placeholder="Last Name" style="padding: 10px; margin-bottom: 10px; border-radius: 5px;">
+  <hr style="height: 10px; width: 100vw; margin: 10px -20px; background-color: #666; border: none;"></hr>
+  <p style="margin: 0px; width: 80%; padding: 0px; font-size: 14px;">Contact Information</p>
+  <hr style="margin: 10px 0px; width: 100%;"></hr>
+  <input class="info-box" type="text" id="telephone" name="telephone" placeholder="Telephone" style="padding: 10px; margin-bottom: 10px; border-radius: 5px;">
+  <input class="info-box" type="email" id="email" name="email" placeholder="Email" style="padding: 10px; margin-bottom: 10px; border-radius: 5px;">
+  <input class="info-box" type="text" id="social" name="social" placeholder="Social" style="padding: 10px; margin-bottom: 10px; border-radius: 5px;">
+
+
+
+  <input class="info-box" type="text" id="address" name="address" placeholder="Address" style="padding: 10px; margin-bottom: 10px; border-radius: 5px;">
+  <input class="info-box" type="text" id="location" name="location" placeholder="Location" style="padding: 10px; margin-bottom: 10px; border-radius: 5px;">
+  <hr style="height: 10px; width: 100vw; margin: 10px -20px; background-color: #666; border: none;"></hr>
+  <p style="margin: 0px; width: 80%; padding: 0px; font-size: 14px;">Creation details</p>
+  <hr style="margin: 10px 0px; width: 100%;"></hr>
+  <input class="info-box" type="text" id="found" name="found" placeholder="Found" style="padding: 10px; margin-bottom: 10px; border-radius: 5px;">
+  <input class="info-box" type="text" id="referred" name="referred" placeholder="Referred" style="padding: 10px; margin-bottom: 10px; border-radius: 5px;">
+  <input class="info-box" type="text" id="who" name="who" placeholder="Who" style="padding: 10px; margin-bottom: 10px; border-radius: 5px;">
+  
+    <hr style="height: 10px; width: 100vw; margin: 10px -20px; background-color: #666; border: none;"></hr>
+    <p style="margin: 0px; width: 80%; padding: 0px; font-size: 14px;">Assignment</p>
+  <hr style="margin: 10px 0px; width: 100%;"></hr>
+  <label for="online">Online:</label>
+  <input type="checkbox" id="online" name="online">
+<input class="info-box" type="text" id="ward" name="ward" placeholder="Ward" style="padding: 10px; margin-bottom: 10px; border-radius: 5px;">
+  <input class="info-box" type="text" id="convenio" name="convenio" placeholder="Convenio" style="padding: 10px; margin-bottom: 10px; border-radius: 5px;">
+      <hr style="height: 10px; width: 100vw; margin: 10px -20px; background-color: #666; border: none;"></hr>
+
+
+  <p style="margin: 0px; width: 80%; padding: 0px; font-size: 14px;">Additional Information</p>
+  <hr style="margin: 10px 0px; width: 100%;"></hr>
+  
+  
+  <select class="info-box" id="type" name="type" style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px;">
+    <option value="">Type</option>
+    <option value="type1">Type 1</option>
+    <option value="type2">Type 2</option>
+  </select>
+  <input class="info-box" type="number" id="age" name="age" placeholder="Age" style="padding: 10px; margin-bottom: 10px; border-radius: 5px;">
+  <select class="info-box" id="sex" name="sex" style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px;">
+    <option value="">Sex</option>
+    <option value="male">Male</option>
+    <option value="female">Female</option>
+  </select>
+  <select class="info-box" id="language" name="language" style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px;">
+    <option value="">Language</option>
+    <option value="english">English</option>
+    <option value="spanish">Spanish</option>
+  </select>
+</div>
+    </div>
+  </div>
+</div>
+    </form>
+    
+    
+    
+    <script>
+        function openToolbar() {
+            let toolbar = document.getElementById('toolbar');
+            if (toolbar.style.width === '250px') {
+                toolbar.style.width = '0';
+            } else {
+                toolbar.style.width = '250px';
+            }
+        }
+        
+document.addEventListener('DOMContentLoaded', function() {
+  const groups = [
+    { title: '#1', selector: '#group-1' },
+    { title: '#2', selector: '#group-2' },
+    { title: '#3', selector: '#group-3' },
+    { title: '#4', selector: '#group-4' },
+    { title: '#5', selector: '#group-5' },
+    { title: '#6', selector: '#group-6' },
+  ];
+
+  groups.forEach((group) => {
+    const container = document.querySelector(group.selector);
+    container.innerHTML = '';
+
+    Object.keys(localStorage).forEach((key) => {
+      if (key.startsWith('person')) {
+        const fileContent = localStorage.getItem(key);
+        const lines = fileContent.split('\n');
+        let name = '';
+        let age = '';
+        let date = '';
+        let groupValue = '';
+
+        lines.forEach((line) => {
+          if (line.startsWith('Name: ')) {
+            name = line.substring(6).trim();
+          } else if (line.startsWith('Age: ')) {
+            age = line.substring(5).trim();
+          } else if (line.startsWith('Date Added: ')) {
+            date = line.substring(12).trim();
+          } else if (line.startsWith('Group: ')) {
+            groupValue = line.substring(7).trim();
+          }
+        });
+
+        if (groupValue === group.title) {
+          const dateAdded = new Date(date.split(', ')[0].split('/').reverse().join('-') + 'T' + date.split(', ')[1]);
+          const today = new Date();
+          const diffDays = Math.floor((today - dateAdded) / (1000 * 60 * 60 * 24));
+
+          const itemHtml = `
+            <div class="person-item">
+              <div class="person-status" style="${group.title === '#5' ? 'background-color: #ffcf46;' : ''}"></div>
+              <div class="person-info">
+                <div style="margin: 0px; display: flex; justify-content: left; gap: 15px;">
+                  <p class="person-name">${name}</p>
+                  <p class="person-age">${age} años</p>
+                </div>
+                <p class="person-date">Agregado hace ${diffDays} ${diffDays === 1 ? 'día' : 'días'}</p>
+              </div>
+            </div>
+          `;
+          container.insertAdjacentHTML('beforeend', itemHtml);
+        }
+      }
+    });
+  });
+});
+        
+        document.getElementById('add-person').addEventListener('click', () => {
+  document.getElementById('add-person-modal').style.display = 'flex';
+});
+
+document.getElementById('cancel-add-person').addEventListener('click', () => {
+  document.getElementById('add-person-modal').style.display = 'none';
+});
+
+document.getElementById('add-person-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const name = document.getElementById('name').value;
+  const lastName = document.getElementById('last-name').value;
+  const telephone = document.getElementById('telephone').value;
+  const email = document.getElementById('email').value;
+  const social = document.getElementById('social').value;
+  const address = document.getElementById('address').value;
+  const location = document.getElementById('location').value;
+  const found = document.getElementById('found').value;
+  const referred = document.getElementById('referred').value;
+  const who = document.getElementById('who').value;
+  const online = document.getElementById('online').checked ? 'Yes' : 'No';
+  const ward = document.getElementById('ward').value;
+  const convenio = document.getElementById('convenio').value;
+  const type = document.getElementById('type').value;
+  const age = document.getElementById('age').value;
+  const sex = document.getElementById('sex').value;
+  const language = document.getElementById('language').value;
+  const currentDateTime = new Date().toLocaleString('en-GB'); // Format: DD/MM/YYYY, HH:MM:SS
+  const key = `person${Object.keys(localStorage).filter(key => key.startsWith('person')).length + 1}`;
+  const value = `Name: ${name} ${lastName}\nTelephone: ${telephone}\nEmail: ${email}\nSocial: ${social}\nAddress: ${address}\nLocation: ${location}\nFound: ${found}\nReferred: ${referred}\nWho: ${who}\nOnline: ${online}\nWard: ${ward}\nConvenio: ${convenio}\nType: ${type}\nAge: ${age}\nSex: ${sex}\nLanguage: ${language}\nGroup: #5\nDate Added: ${currentDateTime}`;
+  localStorage.setItem(key, value);
+  document.getElementById('add-person-modal').style.display = 'none';
+  document.dispatchEvent(new Event('DOMContentLoaded'));
+});
+        
+        
+        document.addEventListener('click', () => {
+  const elem = document.documentElement;
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.mozRequestFullScreen) {
+    elem.mozRequestFullScreen();
+  } else if (elem.webkitRequestFullScreen) {
+    elem.webkitRequestFullScreen();
+  } else if (elem.msRequestFullScreen) {
+    elem.msRequestFullScreen();
+  }
+});
+
+    </script>
+</body>
+</html>
